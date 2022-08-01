@@ -45,7 +45,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .loginPage("/member/login")
         .loginProcessingUrl("/login")
         .successHandler(successHandler());
-        
     http.csrf().disable();
     http.logout();
     // http://localhost:8080/club/login/oauth2/code/google

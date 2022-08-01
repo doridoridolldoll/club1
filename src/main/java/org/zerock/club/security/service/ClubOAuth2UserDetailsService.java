@@ -21,12 +21,14 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @Service
 @RequiredArgsConstructor
+//Open Auth를 Social로 로그인하기 위한 객체
 public class ClubOAuth2UserDetailsService extends DefaultOAuth2UserService {
 
   private final ClubMemberRepository repository;
   private final PasswordEncoder passwordEncoder;
 
   @Override
+  //사용자가 username, password를 이용해서 정상적 로그인을 하고 해당 정보를 social에서 받는 객체
   public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 
     log.info("-----------------------------------------");
@@ -35,9 +37,9 @@ public class ClubOAuth2UserDetailsService extends DefaultOAuth2UserService {
     String clientName = userRequest.getClientRegistration().getClientName();
 
     log.info("clientName:" + clientName);
-    log.info(userRequest.getAdditionalParameters()); // 구글로부터 오는 정보
+    log.info(userRequest.getAdditionalParameters()); // 구글로부터 오는 정보를 확인
 
-    OAuth2User oAuth2User = super.loadUser(userRequest);
+    OAuth2User oAuth2User = super.loadUser(userRequest); // userRequest에 의해 세션 획득
 
     log.info("=========================================");
     oAuth2User.getAttributes().forEach((k, v) -> {

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Modify Club Member</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+  <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous" />
+</head>
+
+<body>
+  <div class="container">
+    <form class="form-signin" method="post" th:action="@{/member/modify}">
+      <h2 class="form-signin-heading">Modify Member</h2>
+      <p>
+        <label for="email">Email</label>
+        <input type="text" id="email" name="email" class="form-control" placeholder="Email" th:value="${auth.email}"
+          required autofocus readonly>
+        <input type="hidden" name="username" th:value="${auth.username}">
+        <input type="hidden" name="username" th:value="${auth.fromSocial}">
+      </p>
+      <p>
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" class="form-control" placeholder="Name" required>
+      </p>
+      <!-- <p>
+        <label for="role" th:each="role : ${roleNames}">
+          <input type="hidden" name="roleSet" th:value="${role}">
+        </label>
+      </p> -->
+      <p>
+        <label for="password">Password</label>
+        <input type="password" id="Password" name="password" class="form-control" placeholder="Password" required>
+      </p>
+      <p>
+        <input type="password" id="rePassword" class="form-control" placeholder="RePassword" required>
+      </p>
+        <button class="btn btn-lg btn-primary btn-block" type="button">Modify</button>
+        <button class="btn btn-lg btn-info btn-block" type="button">Login</button>
+      <p>
+        <span id="notice"></span>
+      </p>
+    </form>
+    <h2 class="form-signin-heading">Login with OAuth 2.0</h2>
+    <table class="table table-striped">
+      <tr>
+        <td><a href="/club/oauth2/authorization/google">Google</a></td>
+      </tr>
+    </table>
+  </div>
+</body>
+
+</html>
