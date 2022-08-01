@@ -41,11 +41,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     http.authorizeRequests()
         .antMatchers("/sample/all").permitAll()
         .antMatchers("/sample/member").hasRole("USER");
-    http.formLogin().loginPage("/member/login");
+    http.formLogin()
+        .loginPage("/member/login")
+        .loginProcessingUrl("/login")
+        .successHandler(successHandler());
+        
     http.csrf().disable();
     http.logout();
-    //http://localhost:8080/club/login/oauth2/code/google
-    http.oauth2Login().successHandler(successHandler()); 
+    // http://localhost:8080/club/login/oauth2/code/google
+    http.oauth2Login().successHandler(successHandler());
   }
 
   @Bean
