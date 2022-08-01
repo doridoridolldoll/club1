@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.zerock.club.security.handler.ClubLoginSuccessHandler;
 
 @EnableWebSecurity
 @Configuration
@@ -40,10 +41,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     http.authorizeRequests()
         .antMatchers("/sample/all").permitAll()
         .antMatchers("/sample/member").hasRole("USER");
-    http.formLogin();
+    http.formLogin().loginPage("/member/login");
     http.csrf().disable();
     http.logout();
-    http.oauth2Login(); //http://localhost:8080/club/login/oauth2/code/google
+    //http://localhost:8080/club/login/oauth2/code/google
+    http.oauth2Login().successHandler(successHandler()); 
   }
 
+  @Bean
+  public ClubLoginSuccessHandler successHandler() {
+    return new ClubLoginSuccessHandler(passwordEncoder());
+  }
 }
