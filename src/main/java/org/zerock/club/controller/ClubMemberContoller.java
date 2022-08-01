@@ -9,15 +9,22 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.zerock.club.security.dto.ClubAuthMemberDTO;
+import org.zerock.club.security.dto.ClubMemberDTO;
+import org.zerock.club.security.service.ClubMemberSerivce;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @Controller
 @RequestMapping("/member")
-public class MemberContoller {
+@RequiredArgsConstructor
+public class ClubMemberContoller {
+
+  private final ClubMemberSerivce service;
 
   @GetMapping("/login")
   public void login() {
@@ -35,6 +42,13 @@ public class MemberContoller {
         roleNames.add(authority.getAuthority());
       }
     });
+    model.addAttribute("auth", dto);
     model.addAttribute("roleNames", roleNames);
+  }
+
+  @PostMapping("/modify")
+  public String modifyPost(ClubMemberDTO dto, Model model) {
+    service.modifyClubMember(dto);
+    return "redirect:/member/login";
   }
 }
